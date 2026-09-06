@@ -14,16 +14,563 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          action: string
+          actor_role: Database["public"]["Enums"]["app_role"] | null
+          actor_user_id: string | null
+          created_at: string
+          details: Json
+          entity_id: string | null
+          entity_type: string
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_role?: Database["public"]["Enums"]["app_role"] | null
+          actor_user_id?: string | null
+          created_at?: string
+          details?: Json
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_role?: Database["public"]["Enums"]["app_role"] | null
+          actor_user_id?: string | null
+          created_at?: string
+          details?: Json
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      ayush_assessments: {
+        Row: {
+          agni: string
+          ahara: string
+          ayush_system: string
+          case_id: string | null
+          created_at: string
+          id: string
+          mala: string
+          manas: string
+          nidra: string
+          notes: string
+          patient_id: string
+          prakriti: string
+          recorded_by: string
+          recorded_by_role: Database["public"]["Enums"]["app_role"]
+          vikriti: string
+        }
+        Insert: {
+          agni?: string
+          ahara?: string
+          ayush_system?: string
+          case_id?: string | null
+          created_at?: string
+          id?: string
+          mala?: string
+          manas?: string
+          nidra?: string
+          notes?: string
+          patient_id: string
+          prakriti?: string
+          recorded_by: string
+          recorded_by_role: Database["public"]["Enums"]["app_role"]
+          vikriti?: string
+        }
+        Update: {
+          agni?: string
+          ahara?: string
+          ayush_system?: string
+          case_id?: string | null
+          created_at?: string
+          id?: string
+          mala?: string
+          manas?: string
+          nidra?: string
+          notes?: string
+          patient_id?: string
+          prakriti?: string
+          recorded_by?: string
+          recorded_by_role?: Database["public"]["Enums"]["app_role"]
+          vikriti?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ayush_assessments_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "patient_cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ayush_assessments_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consultations: {
+        Row: {
+          advice: string
+          case_id: string | null
+          consultation_id: string
+          created_at: string
+          diagnosis: string
+          doctor_id: string
+          examination_findings: string
+          follow_up_date: string | null
+          id: string
+          patient_id: string
+          status: string
+          treatment_plan: string
+          updated_at: string
+        }
+        Insert: {
+          advice?: string
+          case_id?: string | null
+          consultation_id?: string
+          created_at?: string
+          diagnosis: string
+          doctor_id: string
+          examination_findings?: string
+          follow_up_date?: string | null
+          id?: string
+          patient_id: string
+          status?: string
+          treatment_plan?: string
+          updated_at?: string
+        }
+        Update: {
+          advice?: string
+          case_id?: string | null
+          consultation_id?: string
+          created_at?: string
+          diagnosis?: string
+          doctor_id?: string
+          examination_findings?: string
+          follow_up_date?: string | null
+          id?: string
+          patient_id?: string
+          status?: string
+          treatment_plan?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultations_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "patient_cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "consultations_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "consultations_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      doctors: {
+        Row: {
+          created_at: string
+          doctor_id: string
+          hospital_clinic: string
+          id: string
+          registration_number: string
+          specialization: string
+          state_medical_council: string
+          updated_at: string
+          user_id: string
+          verification_status: string
+          years_experience: number
+        }
+        Insert: {
+          created_at?: string
+          doctor_id?: string
+          hospital_clinic?: string
+          id?: string
+          registration_number?: string
+          specialization?: string
+          state_medical_council?: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string
+          years_experience?: number
+        }
+        Update: {
+          created_at?: string
+          doctor_id?: string
+          hospital_clinic?: string
+          id?: string
+          registration_number?: string
+          specialization?: string
+          state_medical_council?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string
+          years_experience?: number
+        }
+        Relationships: []
+      }
+      patient_cases: {
+        Row: {
+          allergies: string
+          chief_complaint: string
+          created_at: string
+          created_by: string
+          current_medications: string
+          family_history: string
+          id: string
+          lifestyle: string
+          past_history: string
+          patient_id: string
+          presenting_illness: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          allergies?: string
+          chief_complaint: string
+          created_at?: string
+          created_by: string
+          current_medications?: string
+          family_history?: string
+          id?: string
+          lifestyle?: string
+          past_history?: string
+          patient_id: string
+          presenting_illness?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          allergies?: string
+          chief_complaint?: string
+          created_at?: string
+          created_by?: string
+          current_medications?: string
+          family_history?: string
+          id?: string
+          lifestyle?: string
+          past_history?: string
+          patient_id?: string
+          presenting_illness?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patient_cases_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          abha_number: string
+          abha_status: string
+          address: string
+          age: number | null
+          blood_group: string | null
+          created_at: string
+          date_of_birth: string | null
+          gender: string
+          id: string
+          patient_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          abha_number?: string
+          abha_status?: string
+          address?: string
+          age?: number | null
+          blood_group?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          gender?: string
+          id?: string
+          patient_id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          abha_number?: string
+          abha_status?: string
+          address?: string
+          age?: number | null
+          blood_group?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          gender?: string
+          id?: string
+          patient_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pharmacists: {
+        Row: {
+          created_at: string
+          id: string
+          pharmacist_id: string
+          pharmacy_address: string
+          pharmacy_name: string
+          registration_number: string
+          state_pharmacy_council: string
+          updated_at: string
+          user_id: string
+          verification_status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          pharmacist_id?: string
+          pharmacy_address?: string
+          pharmacy_name?: string
+          registration_number?: string
+          state_pharmacy_council?: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          pharmacist_id?: string
+          pharmacy_address?: string
+          pharmacy_name?: string
+          registration_number?: string
+          state_pharmacy_council?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string
+        }
+        Relationships: []
+      }
+      prescription_items: {
+        Row: {
+          anupana: string
+          dosage: string
+          duration: string
+          form: string
+          frequency: string
+          id: string
+          instructions: string
+          medicine_name: string
+          prescription_id: string
+          sort_order: number
+        }
+        Insert: {
+          anupana?: string
+          dosage?: string
+          duration?: string
+          form?: string
+          frequency?: string
+          id?: string
+          instructions?: string
+          medicine_name: string
+          prescription_id: string
+          sort_order?: number
+        }
+        Update: {
+          anupana?: string
+          dosage?: string
+          duration?: string
+          form?: string
+          frequency?: string
+          id?: string
+          instructions?: string
+          medicine_name?: string
+          prescription_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescription_items_prescription_id_fkey"
+            columns: ["prescription_id"]
+            isOneToOne: false
+            referencedRelation: "prescriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prescriptions: {
+        Row: {
+          consultation_id: string
+          created_at: string
+          doctor_id: string
+          id: string
+          notes: string
+          patient_id: string
+          prescription_id: string
+          status: string
+        }
+        Insert: {
+          consultation_id: string
+          created_at?: string
+          doctor_id: string
+          id?: string
+          notes?: string
+          patient_id: string
+          prescription_id?: string
+          status?: string
+        }
+        Update: {
+          consultation_id?: string
+          created_at?: string
+          doctor_id?: string
+          id?: string
+          notes?: string
+          patient_id?: string
+          prescription_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescriptions_consultation_id_fkey"
+            columns: ["consultation_id"]
+            isOneToOne: false
+            referencedRelation: "consultations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prescriptions_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prescriptions_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      professional_verifications: {
+        Row: {
+          created_at: string
+          id: string
+          identifier: string
+          mode: string
+          registry: string
+          role: Database["public"]["Enums"]["app_role"]
+          status: string
+          user_id: string
+          verified_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          identifier: string
+          mode?: string
+          registry: string
+          role: Database["public"]["Enums"]["app_role"]
+          status?: string
+          user_id: string
+          verified_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          identifier?: string
+          mode?: string
+          registry?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          status?: string
+          user_id?: string
+          verified_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          mobile: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id: string
+          mobile?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          mobile?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_doctor_uuid: { Args: never; Returns: string }
+      current_patient_uuid: { Args: never; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "patient" | "doctor" | "pharmacist"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +697,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["patient", "doctor", "pharmacist"],
+    },
   },
 } as const
