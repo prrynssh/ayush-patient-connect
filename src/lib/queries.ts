@@ -6,6 +6,11 @@ function unwrap<T>(res: { data: T; error: { message: string } | null }): NonNull
   return res.data as NonNullable<T>;
 }
 
+function unwrapNullable<T>(res: { data: T; error: { message: string } | null }): T | null {
+  if (res.error) throw new Error(res.error.message);
+  return res.data ?? null;
+}
+
 export const profileQuery = (userId: string) =>
   queryOptions({
     queryKey: ["profile", userId],
@@ -38,7 +43,7 @@ export const myVerificationQuery = (userId: string) =>
   queryOptions({
     queryKey: ["verification", userId],
     queryFn: async () =>
-      unwrap(
+      unwrapNullable(
         await supabase
           .from("professional_verifications")
           .select("*")
@@ -54,7 +59,7 @@ export const patientByUuidQuery = (uuid: string) =>
     queryKey: ["patient", uuid],
     queryFn: async () => {
       const patient = unwrap(await supabase.from("patients").select("*").eq("id", uuid).single());
-      const profile = unwrap(
+      const profile = unwrapNullable(
         await supabase
           .from("profiles")
           .select("full_name, mobile, email")
@@ -90,9 +95,6 @@ export const assessmentsQuery = (patientUuid: string) =>
           .order("created_at", { ascending: false }),
       ),
   });
-
-export const CONSULTATION_SELECT =
-  "*, doctors(doctor_id, specialization, hospital_clinic, user_id, profiles:user_id(full_name)), patients(patient_id, user_id), prescriptions(id, prescription_id)";
 
 export const consultationsForPatientQuery = (patientUuid: string) =>
   queryOptions({
